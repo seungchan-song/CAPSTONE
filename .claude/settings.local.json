@@ -12,7 +12,10 @@
       "mcp__claude_ai_Notion__notion-create-pages",
       "mcp__claude_ai_Notion__notion-create-database",
       "mcp__claude_ai_Notion__notion-fetch",
-      "mcp__claude_ai_Notion__notion-search"
+      "mcp__claude_ai_Notion__notion-search",
+      "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/general)",
+      "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/sensitive)",
+      "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/attack)"
     ]
   },
   "enabledMcpjsonServers": [
