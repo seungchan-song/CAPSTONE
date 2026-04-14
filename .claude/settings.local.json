@@ -5,7 +5,19 @@
       "Bash(python:*)",
       "Bash(pip list:*)",
       "Bash(python3:*)",
-      "Bash(ruff check:*)"
+      "Bash(ruff check:*)",
+      "WebSearch",
+      "WebFetch(domain:pypi.org)",
+      "Bash(pip3 install:*)",
+      "mcp__claude_ai_Notion__notion-create-pages",
+      "mcp__claude_ai_Notion__notion-create-database",
+      "mcp__claude_ai_Notion__notion-fetch",
+      "mcp__claude_ai_Notion__notion-search"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "context7",
+    "sequential-thinking",
+    "playwright"
+  ]
 }
