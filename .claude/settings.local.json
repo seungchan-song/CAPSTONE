@@ -22,7 +22,8 @@
       "Skill(update-config)",
       "Bash(pytest *)",
       "Bash(git add *)",
-      "Bash(git commit -m ' *)"
+      "Bash(git commit -m ' *)",
+      "Bash(xargs grep *)"
     ]
   },
   "enabledMcpjsonServers": [
