@@ -1,0 +1,178 @@
+@startuml K-RAG_UseCase_Diagram
+
+' =============================================
+' K-RAG 공격 및 정보 유출 진단 시스템
+' UML Use Case Diagram
+' Team: 수박 (세종대학교 정보보호학과)
+' =============================================
+
+left to right direction
+
+skinparam usecase {
+  BackgroundColor #E8F4FD
+  BorderColor #1565C0
+  ArrowColor #1565C0
+  ActorBackgroundColor #FFF9C4
+  ActorBorderColor #E65100
+  FontSize 11
+}
+skinparam rectangle {
+  BackgroundColor #FFFFFF
+  BorderColor #212121
+  BorderThickness 2
+  FontSize 14
+  FontStyle bold
+}
+skinparam package {
+  BackgroundColor #FAFAFA
+  BorderColor #BDBDBD
+  FontSize 12
+  FontStyle bold
+}
+
+title K-RAG 공격 및 정보 유출 진단 시스템\nUML Use Case Diagram
+
+' =============================================
+' 액터(Actors)
+' =============================================
+
+actor "보안 연구자\n(Security Researcher)" as Researcher
+actor "GPT-4o-mini\n(생성기/sLLM)" as GPT
+actor "HyperCLOVA X\n(국내 생성기)" as CLOVA
+actor "KPF-BERT\n(NER 모델)" as BERT
+
+' =============================================
+' 시스템 경계
+' =============================================
+
+rectangle "K-RAG 공격 및 정보 유출 진단 시스템" {
+
+  package "1. RAG 실험 환경 관리" as PKG1 {
+    usecase "UC01\n문서 업로드 및 등록" as UC01
+    usecase "UC02\n문서 분류 및 메타데이터 관리" as UC02
+    usecase "UC03\n인덱싱 파이프라인 실행" as UC03
+    usecase "UC04\nClean / Poisoned DB 구축" as UC04
+    usecase "UC05\n인덱스 갱신" as UC05
+    usecase "UC06\n실험 배치 실행" as UC06
+    usecase "UC07\n실험 재현 (run_id 기반)" as UC07
+    usecase "UC08\nRAG 질의 처리\n(임베딩→검색→리랭킹→생성)" as UC08
+  }
+
+  package "2. 공격 시뮬레이션" as PKG2 {
+    usecase "UC10\n공격 시뮬레이션 자동 실행" as UC10
+    usecase "UC11\nR2 검색 데이터 유출 공격\n(앵커 쿼리 + 명령어 프롬프트)" as UC11
+    usecase "UC12\nR4 멤버십 추론 공격\n(b vs b' 판별)" as UC12
+    usecase "UC13\nR9 간접 프롬프트 주입 공격\n(트리거 토큰 + 악성 문서)" as UC13
+    usecase "UC14\nPoisoned 환경 구성\n(공격 문서 DB 삽입)" as UC14
+  }
+
+  package "3. 정량적 평가" as PKG3 {
+    usecase "UC20\n공격 성공 판정" as UC20
+    usecase "UC21\nR2 평가\n(ROUGE-L Recall >= 0.60~0.85)" as UC21
+    usecase "UC22\nR4 평가\n(멤버십 추론 성공률)" as UC22
+    usecase "UC23\nR9 평가\n(트리거 문자열 포함 여부)" as UC23
+  }
+
+  package "4. 한국형 PII 탐지" as PKG4 {
+    usecase "UC30\nPII 탐지 파이프라인 실행" as UC30
+    usecase "UC31\nSTEP 1 정규식 기반 탐지\n(전화번호·이메일·여권번호 등)" as UC31
+    usecase "UC32\nSTEP 2 체크섬·구조 검증\n(주민번호 mod11 / Luhn)" as UC32
+    usecase "UC33\nSTEP 3 KPF-BERT NER 탐지\n(이름·주소·직장명 등)" as UC33
+    usecase "UC34\nSTEP 4 sLLM 교차검증\n(문맥 기반 오탐 제거)" as UC34
+    usecase "UC35\n한국형 PII 확정 및 마스킹" as UC35
+  }
+
+  package "5. 자동 리포트 생성" as PKG5 {
+    usecase "UC40\n보안 진단 리포트 생성" as UC40
+    usecase "UC41\n공격 성공률 시각화 및 요약" as UC41
+    usecase "UC42\nPII 유출 프로파일링\n(시나리오별 Top3 / 위험도)" as UC42
+    usecase "UC43\nClean vs Poisoned DB 비교" as UC43
+    usecase "UC44\nre-ranker 방어 효과 정량화" as UC44
+    usecase "UC45\nCSV / JSON / PDF 내보내기" as UC45
+  }
+
+}
+
+' =============================================
+' 액터 - 유스케이스 연관
+' =============================================
+
+Researcher --> UC01 : 문서 등록
+Researcher --> UC06 : 실험 실행
+Researcher --> UC07 : 실험 재현
+Researcher --> UC10 : 공격 시뮬레이션 요청
+Researcher --> UC40 : 리포트 요청
+
+GPT   --> UC08 : 응답 생성
+CLOVA --> UC08 : 응답 생성 (국내)
+BERT  --> UC33 : NER 추론
+GPT   --> UC34 : 교차검증 판별
+
+' =============================================
+' 유스케이스 내부 관계
+' =============================================
+
+' RAG 환경 관리
+UC01 ..> UC02 : <<include>>
+UC03 ..> UC04 : <<include>>
+UC05 .up.> UC03 : <<extend>>
+UC06 ..> UC03 : <<include>>
+UC06 ..> UC08 : <<include>>
+
+' 공격 시뮬레이션
+UC10 ..> UC14 : <<include>>
+UC10 ..> UC11 : <<extend>>
+UC10 ..> UC12 : <<extend>>
+UC10 ..> UC13 : <<extend>>
+UC11 ..> UC08 : <<include>>
+UC12 ..> UC08 : <<include>>
+UC13 ..> UC08 : <<include>>
+
+' 정량적 평가
+UC10 ..> UC20 : <<include>>
+UC20 ..> UC21 : <<extend>>
+UC20 ..> UC22 : <<extend>>
+UC20 ..> UC23 : <<extend>>
+
+' PII 탐지
+UC20 ..> UC30 : <<include>>
+UC30 ..> UC31 : <<include>>
+UC32 .up.> UC31 : <<extend>>
+UC30 ..> UC33 : <<include>>
+UC34 .up.> UC33 : <<extend>>
+UC30 ..> UC35 : <<include>>
+
+' 리포트 생성
+UC40 ..> UC41 : <<include>>
+UC40 ..> UC42 : <<include>>
+UC40 ..> UC43 : <<include>>
+UC40 ..> UC44 : <<include>>
+UC40 ..> UC45 : <<include>>
+UC06 ..> UC40 : <<include>>
+
+' =============================================
+' 보조 주석
+' =============================================
+
+note right of UC11
+  앵커 쿼리로 민감 문서 검색 유도
+  + 명령어 프롬프트로 내용 출력 유도
+end note
+
+note bottom of UC32
+  경로 A-1: STEP1 통과 → 즉시 PII 확정
+  경로 A-2: STEP1 + STEP2 통과 → PII 확정
+end note
+
+note bottom of UC34
+  경로 B-1: NER F1 높음 → 즉시 PII 확정
+  경로 B-2: NER F1 낮음 → sLLM 통과 시
+  PII 확정 (비용 절감)
+end note
+
+note bottom of UC07
+  run_id + 설정 스냅샷으로
+  완전한 재현성 보장
+end note
+
+@enduml
