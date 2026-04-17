@@ -35,7 +35,6 @@ CAPSTONE/
 │   ├── evaluator/           # 공격 성공 판정 엔진
 │   ├── pii/                 # 한국형 PII 탐지 4단계 파이프라인
 │   ├── report/              # 자동 리포트 생성
-│   ├── connector/           # 외부 RAG 시스템 연결 (선택)
 │   └── utils/               # 설정, 로깅, 실험 관리
 ├── data/
 │   ├── documents/           # 실험용 문서 (일반/민감/공격)
