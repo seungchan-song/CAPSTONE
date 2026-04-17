@@ -1,4 +1,7 @@
 {
+  "env": {
+    "ENABLE_TOOL_SEARCH": "auto:5"
+  },
   "permissions": {
     "allow": [
       "Bash(pip install:*)",
@@ -15,7 +18,11 @@
       "mcp__claude_ai_Notion__notion-search",
       "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/general)",
       "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/sensitive)",
-      "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/attack)"
+      "Bash(mkdir -p /Users/songseungchan/Desktop/CAPSTONE/data/documents/attack)",
+      "Skill(update-config)",
+      "Bash(pytest *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)"
     ]
   },
   "enabledMcpjsonServers": [
