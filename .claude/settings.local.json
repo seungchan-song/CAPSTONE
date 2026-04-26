@@ -23,7 +23,12 @@
       "Bash(pytest *)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(xargs grep *)"
+      "Bash(xargs grep *)",
+      "mcp__sequential-thinking__sequentialthinking",
+      "mcp__claude_ai_Notion__notion-update-page",
+      "mcp__playwright__browser_navigate",
+      "Bash(file /Users/songseungchan/Desktop/CAPSTONE/참고자료/*.pdf)",
+      "Bash(pdftotext *)"
     ]
   },
   "enabledMcpjsonServers": [
