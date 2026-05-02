@@ -46,7 +46,9 @@
       "Bash(pkill -f \"python3 -m http.server 8766\")",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8765/report.pdf)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8766/report.pdf)",
-      "Bash(pkill -f \"http.server\")"
+      "Bash(pkill -f \"http.server\")",
+      "Bash(grep -rn \"TODO\\\\|FIXME\\\\|HACK\\\\|XXX\\\\|NotImplemented\\\\|pass$\\\\|raise NotImplementedError\" /Users/songseungchan/Desktop/CAPSTONE/src/rag/ --include=\"*.py\")",
+      "Bash(echo \"PID: $!\")"
     ]
   },
   "enabledMcpjsonServers": [
