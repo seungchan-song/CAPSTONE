@@ -29,16 +29,19 @@ CAPSTONE/
 ├── src/rag/                 # 메인 소스 코드
 │   ├── cli/                 # Typer CLI 인터페이스
 │   ├── ingest/              # 문서 입력 및 인덱싱 파이프라인
+│   ├── index/               # FAISS 인덱스 영속화 및 증분 동기화 (manager, store)
 │   ├── retriever/           # 검색 파이프라인 (임베딩, FAISS, 리랭커)
 │   ├── generator/           # LLM 응답 생성
 │   ├── attack/              # 공격 엔진 (R2, R4, R9)
 │   ├── evaluator/           # 공격 성공 판정 엔진
 │   ├── pii/                 # 한국형 PII 탐지 4단계 파이프라인
+│   │   ├── eval.py          # KDPII 벤치마크 기반 파이프라인 성능 평가
+│   │   └── artifacts.py     # 실험 결과 저장 전 PII 마스킹 처리
 │   ├── report/              # 자동 리포트 생성
 │   └── utils/               # 설정, 로깅, 실험 관리
 ├── data/
-│   ├── documents/           # 실험용 문서 (일반/민감/공격)
-│   ├── indices/             # FAISS 인덱스 저장소
+│   ├── documents/           # 실험용 문서 (clean/, poisoned/ 구조)
+│   ├── indexes/             # FAISS 인덱스 저장소 (ingest 실행 시 자동 생성)
 │   └── results/             # 실험 결과 (JSON/CSV)
 ├── models/                  # 파인튜닝 모델 가중치
 ├── tests/                   # pytest 테스트
