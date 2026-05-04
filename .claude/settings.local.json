@@ -48,7 +48,15 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8766/report.pdf)",
       "Bash(pkill -f \"http.server\")",
       "Bash(grep -rn \"TODO\\\\|FIXME\\\\|HACK\\\\|XXX\\\\|NotImplemented\\\\|pass$\\\\|raise NotImplementedError\" /Users/songseungchan/Desktop/CAPSTONE/src/rag/ --include=\"*.py\")",
-      "Bash(echo \"PID: $!\")"
+      "Bash(echo \"PID: $!\")",
+      "Bash(head -1039 /Users/songseungchan/Desktop/CAPSTONE/src/rag/report/generator.py)",
+      "Read(//tmp/**)",
+      "Bash(grep *)",
+      "Bash(lsof -ti:9753)",
+      "Bash(xargs kill *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:9753/test_dashboard.html)",
+      "mcp__playwright__browser_console_messages",
+      "mcp__playwright__browser_snapshot"
     ]
   },
   "enabledMcpjsonServers": [
